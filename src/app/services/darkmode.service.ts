@@ -19,12 +19,17 @@ export class DarkmodeService {
   }
 
   public setDarkMode() {
+    this.save('on');
+    try {
     enableDarkMode({
       brightness: 100,
       contrast: 90,
       sepia: 10,
     });
-    this.save('on');
+  } catch (e) {
+    console.log('IE11 is trash');
+  }
+
   }
 
   public save(mode: string) {
