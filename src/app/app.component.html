@@ -1,0 +1,20 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+
+<div style="margin:20px">
+<button  [style.backgroundColor] = "mode === 'on' ? 'green' : 'white'" (click)="setDarkMode()">Dark</button>
+</div>
+
+<div style="margin:20px">
+<button  [style.backgroundColor] = "mode === 'off' ? 'green' : 'black'" (click)="setLightMode()">Light</button>
+</div>
+
+
+<table style="border:solid 1px #000">
+<tr><td>TEST</td></tr>
+
+</table>
+<router-outlet></router-outlet>
