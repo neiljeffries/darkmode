@@ -76,6 +76,10 @@ export class DarkmodeService {
     }
   }
 
+  formatLabel(value: number) {
+    return value + '%';
+  }
+
   public getMode(): string {
     return this.getLocalStorage().mode;
   }
