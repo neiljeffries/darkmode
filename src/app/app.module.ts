@@ -9,6 +9,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { DarkModeSettingsComponent } from './components/dark-mode-settings/dark-mode-settings.component';
+import {MatButtonModule} from '@angular/material/button'
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +21,7 @@ import { DarkModeSettingsComponent } from './components/dark-mode-settings/dark-
     BrowserAnimationsModule,
     MatSliderModule,
     MatSlideToggleModule,
+    MatButtonModule,
     FormsModule
   ],
   providers: [DarkmodeService],
