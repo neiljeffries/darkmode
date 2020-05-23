@@ -13,8 +13,8 @@ export interface DarkModeParams {
 const defaults: DarkModeParams = {
   mode: 'off',
   brightness: 100,
-  contrast: 90,
-  sepia: 10,
+  contrast: 100,
+  sepia: 0,
   grayscale: 0
 };
 

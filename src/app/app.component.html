@@ -12,30 +12,29 @@
     <tr>
       <td>Brightness</td>
       <td>
-        {{ brightness }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="150" step="1" [(ngModel)]="brightness" (input)="onBrightnessChange($event)" ></mat-slider>
+        {{ brightness }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="150" step="1" [(ngModel)]="brightness" (input)="onBrightnessChange($event)" ></mat-slider>
       </td>
     </tr>
     <tr>
       <td>Contrast</td>
       <td>
-        {{ contrast }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="150" step="1" [(ngModel)]="contrast" (input)="onContrastChange($event)" ></mat-slider>
+        {{ contrast }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="150" step="1" [(ngModel)]="contrast" (input)="onContrastChange($event)" ></mat-slider>
       </td>
     </tr>
     <tr>
       <td>Sepia</td>
       <td>
-        {{ sepia }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="100" step="1" [(ngModel)]="sepia" (input)="onSepiaChange($event)" ></mat-slider>
+        {{ sepia }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="100" step="1" [(ngModel)]="sepia" (input)="onSepiaChange($event)" ></mat-slider>
       </td>
     </tr>
     <tr>
       <td>Grayscale</td>
       <td>
-        {{ grayscale }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="100" step="1" [(ngModel)]="grayscale" (input)="onGrayScaleChange($event)" ></mat-slider>
+        {{ grayscale }}% <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="100" step="1" [(ngModel)]="grayscale" (input)="onGrayScaleChange($event)" ></mat-slider>
       </td>
     </tr>
     <tr>
-      <td colspan="2"><button (click)="reset()">Reset</button></td>
-      
+      <td colspan="2"><button (click)="reset()">Reset</button></td>      
     </tr>
   </table>
   <router-outlet></router-outlet>

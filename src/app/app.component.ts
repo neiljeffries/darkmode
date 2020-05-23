@@ -48,7 +48,7 @@ export class AppComponent {
     this.darkModeService.setDarkMode();
   }
 
-  public reset() {
+  public reset(): void {
     this.darkModeService.reset();
   }
 
