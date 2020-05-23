@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
 import { disable as disableDarkMode, enable as enableDarkMode } from 'darkreader';
 import { BehaviorSubject } from 'rxjs';
+import { DarkModeParamaters } from '../interfaces/dark-mode-paramaters';
 
-export interface DarkModeParams {
-  mode: string;
-  brightness: number;
-  contrast: number;
-  sepia: number;
-  grayscale: number;
-}
-
-const defaults: DarkModeParams = {
+const defaults: DarkModeParamaters = {
   mode: 'off',
   brightness: 100,
   contrast: 100,
@@ -25,12 +18,12 @@ const defaults: DarkModeParams = {
 export class DarkmodeService {
   constructor() {}
 
-  private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParams>(defaults);
+  private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>(defaults);
   darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
 
   public updateParams(mode: string, brightness: number, contrast: number, sepia: number, grayscale: number) {
     const currentParams = this.darkModeParamsObjSubject.getValue();
-    const newParams: DarkModeParams = currentParams;
+    const newParams: DarkModeParamaters = currentParams;
     newParams.mode = mode;
     newParams.brightness = brightness;
     newParams.contrast = contrast;
@@ -135,9 +128,9 @@ export class DarkmodeService {
     }
   }
 
-  getLocalStorage(): DarkModeParams {
+  getLocalStorage(): DarkModeParamaters {
     const params: string = localStorage.getItem('darkModeParams');
-    const paramsParsed: DarkModeParams = JSON.parse(params);
+    const paramsParsed: DarkModeParamaters = JSON.parse(params);
     return paramsParsed;
   }
 

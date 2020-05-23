@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
 import { DarkmodeService } from './services/darkmode.service';
 import { MatSliderChange } from '@angular/material/slider';
+import { DarkModeParamaters } from './interfaces/dark-mode-paramaters';
 
-
-export interface DarkModeParams {
-  mode: string;
-  brightness: number;
-  contrast: number;
-  sepia: number;
-  grayscale: number;
-}
 
 @Component({
   selector: 'app-root',
@@ -23,7 +16,7 @@ export class AppComponent {
   contrast: number;
   sepia: number;
   grayscale: number;
-  params: DarkModeParams;
+  params: DarkModeParamaters;
 
   constructor(
     public darkModeService: DarkmodeService
@@ -31,7 +24,7 @@ export class AppComponent {
     this.darkModeService.init();
 
     this.darkModeService.darkModeParamsObj.subscribe(params => {
-      this.params = params as DarkModeParams;
+      this.params = params as DarkModeParamaters;
       this.mode = params.mode;
       this.brightness = params.brightness;
       this.contrast = params.contrast;
