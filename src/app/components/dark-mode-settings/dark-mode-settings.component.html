@@ -7,8 +7,8 @@
 <mat-dialog-content class="mat-typography">
 <h4 style="margin-left: 12px;">DarkMode Settings</h4>
   <table cellspacing='0'>
-    <tr>
-      <th colspan="2">{{isIE ? 'Your browser does not support dark mode' : 'You browser supports dark mode!'}}</th>
+    <tr *ngIf="isIE">
+      <td colspan="2"><span style="color:red">This browser does not support dark mode.<br>Proceed at your own risk...</span></td>
     </tr>
     <tr>
       <td colspan="2"><mat-slide-toggle [(ngModel)]="darkmode" (change)="toggleDarkMode()"><span style="margin-left:40px">Dark Mode is: {{darkmode ? 'ON' : 'OFF'}}</span><span ngClass="{{darkmode ? 'darkmode-icon' : 'darkmode-off-icon'}}"></span></mat-slide-toggle> </td>
