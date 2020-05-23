@@ -7,13 +7,15 @@ export interface DarkModeParams {
   brightness: number;
   contrast: number;
   sepia: number;
+  grayscale: number;
 }
 
 const defaults: DarkModeParams = {
   mode: 'off',
   brightness: 100,
   contrast: 90,
-  sepia: 10
+  sepia: 10,
+  grayscale: 0
 };
 
 @Injectable({
@@ -26,13 +28,14 @@ export class DarkmodeService {
   private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParams>(defaults);
   darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
 
-  public updateParams(mode: string, brightness: number, contrast: number, sepia: number) {
+  public updateParams(mode: string, brightness: number, contrast: number, sepia: number, grayscale: number) {
     const currentParams = this.darkModeParamsObjSubject.getValue();
     const newParams: DarkModeParams = currentParams;
     newParams.mode = mode;
     newParams.brightness = brightness;
     newParams.contrast = contrast;
     newParams.sepia = sepia;
+    newParams.grayscale = grayscale;
     localStorage.setItem('darkModeParams', JSON.stringify(newParams));
     this.darkModeParamsObjSubject.next(newParams);
   }
@@ -40,17 +43,18 @@ export class DarkmodeService {
   public setLightMode() {
     disableDarkMode();
     const params = this.darkModeParamsObjSubject.getValue();
-    this.updateParams('off', params.brightness, params.contrast, params.sepia);
+    this.updateParams('off', params.brightness, params.contrast, params.sepia, params.grayscale);
   }
 
   public setDarkMode() {
     const params = this.darkModeParamsObjSubject.getValue();
-    this.updateParams('on', params.brightness, params.contrast, params.sepia);
+    this.updateParams('on', params.brightness, params.contrast, params.sepia, params.grayscale);
     try {
       enableDarkMode({
-        brightness: this.darkModeParamsObjSubject.getValue().brightness,
-        contrast: this.darkModeParamsObjSubject.getValue().contrast,
-        sepia: this.darkModeParamsObjSubject.getValue().sepia
+        brightness: params.brightness,
+        contrast: params.contrast,
+        sepia: params.sepia,
+        grayscale: params.grayscale
       });
     } catch (e) {
       console.log('IE11 is trash');
@@ -61,13 +65,14 @@ export class DarkmodeService {
     if (localStorage.getItem('darkModeParams') === null || localStorage.getItem('darkModeParams') === undefined) {
       this.setLightMode();
     } else {
-      this.updateParams(this.getMode(), this.getBrightness(), this.getContrast(), this.getSepia());
+      this.updateParams(this.getMode(), this.getBrightness(), this.getContrast(), this.getSepia(), this.getGrayScale());
       if (this.getMode() === 'on') {
         try {
           enableDarkMode({
             brightness: this.getBrightness(),
             contrast: this.getContrast(),
-            sepia: this.getSepia()
+            sepia: this.getSepia(),
+            grayscale: this.getGrayScale()
           });
         } catch (e) {
           console.log('IE11 is trash');
@@ -94,6 +99,10 @@ export class DarkmodeService {
     return this.getLocalStorage().sepia;
   }
 
+  public getGrayScale(): number {
+    return this.getLocalStorage().grayscale;
+  }
+
   public setBrightness(value: number): void {
     const params = this.darkModeParamsObjSubject.getValue();
     params.brightness = value;
@@ -109,6 +118,12 @@ export class DarkmodeService {
   public setSepia(value: number): void {
     const params = this.darkModeParamsObjSubject.getValue();
     params.sepia = value;
+    this.saveLocalStorage(params);
+  }
+
+  public setGrayScale(value: number): void {
+    const params = this.darkModeParamsObjSubject.getValue();
+    params.grayscale = value;
     this.saveLocalStorage(params);
   }
 
@@ -130,6 +145,7 @@ export class DarkmodeService {
     this.setBrightness(100);
     this.setContrast(90);
     this.setSepia(10);
+    this.setGrayScale(0);
     this.setDarkMode();
   }
 

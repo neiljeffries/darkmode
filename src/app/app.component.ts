@@ -8,6 +8,7 @@ export interface DarkModeParams {
   brightness: number;
   contrast: number;
   sepia: number;
+  grayscale: number;
 }
 
 @Component({
@@ -21,6 +22,7 @@ export class AppComponent {
   brightness: number;
   contrast: number;
   sepia: number;
+  grayscale: number;
   params: DarkModeParams;
 
   constructor(
@@ -34,6 +36,7 @@ export class AppComponent {
       this.brightness = params.brightness;
       this.contrast = params.contrast;
       this.sepia = params.sepia;
+      this.grayscale = params.grayscale;
     });
   }
 
@@ -59,6 +62,9 @@ export class AppComponent {
 
   public onSepiaChange(event: MatSliderChange) {
     this.darkModeService.setSepia(event.value);
+  }
+  public onGrayScaleChange(event: MatSliderChange) {
+    this.darkModeService.setGrayScale(event.value);
   }
 
   public toggleDarkMode(): void {
