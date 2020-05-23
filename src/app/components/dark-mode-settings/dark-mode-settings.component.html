@@ -1,0 +1,33 @@
+
+  <table cellspacing='0'>
+    <tr>
+      <td colspan="2"><mat-slide-toggle [(ngModel)]="mode" (change)="toggleDarkMode()">Dark Mode {{mode ? 'ON' : 'OFF'}}</mat-slide-toggle></td>
+    </tr>
+    <tr>
+      <td>Brightness</td>
+      <td>
+        {{ brightness }}% <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="150" step="1" [(ngModel)]="brightness" (input)="onBrightnessChange($event)" ></mat-slider>
+      </td>
+    </tr>
+    <tr>
+      <td>Contrast</td>
+      <td>
+        {{ contrast }}% <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="150" step="1" [(ngModel)]="contrast" (input)="onContrastChange($event)" ></mat-slider>
+      </td>
+    </tr>
+    <tr>
+      <td>Sepia</td>
+      <td>
+        {{ sepia }}% <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="100" step="1" [(ngModel)]="sepia" (input)="onSepiaChange($event)" ></mat-slider>
+      </td>
+    </tr>
+    <tr>
+      <td>Grayscale</td>
+      <td>
+        {{ grayscale }}% <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="100" step="1" [(ngModel)]="grayscale" (input)="onGrayScaleChange($event)" ></mat-slider>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"><button (click)="reset()">Reset</button></td>      
+    </tr>
+  </table>

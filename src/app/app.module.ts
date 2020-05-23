@@ -8,9 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { DarkModeSettingsComponent } from './components/dark-mode-settings/dark-mode-settings.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DarkModeSettingsComponent
   ],
   imports: [
     BrowserModule,
