@@ -1,5 +1,5 @@
 export interface DarkModeParamaters {
-    mode: string;
+    mode: boolean;
     brightness: number;
     contrast: number;
     sepia: number;

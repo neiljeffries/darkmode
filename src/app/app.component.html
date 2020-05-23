@@ -1,14 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align: center;">
   <h1>Welcome to {{ title }}!</h1>
-
+<!-- 
   <div style="margin: auto">
-    <button [style.backgroundColor]="mode === 'on' ? 'lime' : 'white'" (click)="toggleDarkMode()" >
-      Dark Mode is {{mode === 'on' ? 'ON' : 'OFF'}}
+    <button [style.backgroundColor]="mode ? 'lime' : 'white'" (click)="toggleDarkMode()" >
+      Dark Mode is {{mode ? 'ON' : 'OFF'}}
     </button>
-  </div>
+  </div> -->
 
   <table cellspacing='0'>
+    <tr>
+      <td colspan="2"><mat-slide-toggle [(ngModel)]="mode" (change)="toggleDarkMode()">Dark Mode {{mode ? 'ON' : 'OFF'}}</mat-slide-toggle></td>
+    </tr>
     <tr>
       <td>Brightness</td>
       <td>

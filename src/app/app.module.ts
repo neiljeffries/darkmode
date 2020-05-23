@@ -7,6 +7,7 @@ import { DarkmodeService } from './services/darkmode.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSliderModule,
+    MatSlideToggleModule,
     FormsModule
   ],
   providers: [DarkmodeService],

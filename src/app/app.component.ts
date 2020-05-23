@@ -10,8 +10,8 @@ import { DarkModeParamaters } from './interfaces/dark-mode-paramaters';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'angularTestDarkmode';
-  mode: string;
+  title = 'DarkModeAngular';
+  mode: boolean;
   brightness: number;
   contrast: number;
   sepia: number;
