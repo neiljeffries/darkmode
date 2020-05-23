@@ -1,7 +1,7 @@
 
   <table cellspacing='0'>
     <tr>
-      <td colspan="2"><mat-slide-toggle [(ngModel)]="mode" (change)="toggleDarkMode()">Dark Mode {{mode ? 'ON' : 'OFF'}}</mat-slide-toggle></td>
+      <td colspan="2"><mat-slide-toggle [(ngModel)]="darkmode" (change)="toggleDarkMode()">Dark Mode {{darkmode ? 'ON' : 'OFF'}}<div ngClass="{{darkmode ? 'darkmode-icon' : 'darkmode-off-icon'}}"></div></mat-slide-toggle> </td>
     </tr>
     <tr>
       <td>Brightness</td>

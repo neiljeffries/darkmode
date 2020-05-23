@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DarkModeParamaters } from '../interfaces/dark-mode-paramaters';
 
 const defaults: DarkModeParamaters = {
-  mode: false,
+  darkmode: false,
   brightness: 100,
   contrast: 100,
   sepia: 0,
@@ -21,10 +21,10 @@ export class DarkmodeService {
   private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>(defaults);
   darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
 
-  public updateParams(mode: boolean, brightness: number, contrast: number, sepia: number, grayscale: number) {
+  public updateParams(darkmode: boolean, brightness: number, contrast: number, sepia: number, grayscale: number) {
     const currentParams = this.darkModeParamsObjSubject.getValue();
     const newParams: DarkModeParamaters = currentParams;
-    newParams.mode = mode;
+    newParams.darkmode = darkmode;
     newParams.brightness = brightness;
     newParams.contrast = contrast;
     newParams.sepia = sepia;
@@ -81,7 +81,7 @@ export class DarkmodeService {
   }
 
   public getMode(): boolean {
-    return this.getLocalStorage().mode;
+    return this.getLocalStorage().darkmode;
   }
 
   public getBrightness(): number {
@@ -127,7 +127,7 @@ export class DarkmodeService {
   saveLocalStorage(newParams) {
     localStorage.setItem('darkModeParams', JSON.stringify(newParams));
     this.darkModeParamsObjSubject.next(newParams);
-    if (this.darkModeParamsObjSubject.getValue().mode) {
+    if (this.darkModeParamsObjSubject.getValue().darkmode) {
       this.setDarkMode();
     }
   }

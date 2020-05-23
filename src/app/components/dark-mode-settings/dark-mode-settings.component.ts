@@ -14,7 +14,7 @@ import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 export class DarkModeSettingsComponent {
 
 
-  mode: boolean;
+  darkmode: boolean;
   brightness: number;
   contrast: number;
   sepia: number;
@@ -28,7 +28,7 @@ export class DarkModeSettingsComponent {
 
     this.darkModeService.darkModeParamsObj.subscribe(params => {
       this.params = params as DarkModeParamaters;
-      this.mode = params.mode;
+      this.darkmode = params.darkmode;
       this.brightness = params.brightness;
       this.contrast = params.contrast;
       this.sepia = params.sepia;

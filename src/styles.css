@@ -101,3 +101,25 @@ table a:link {
       background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
       background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);
   }
+
+  .darkmode-icon{
+    background-image:  url(assets/brightness_3-24px.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 24px; 
+    height: 24px; 
+    margin-left: 12px;
+    float: right;
+
+  }
+  .darkmode-off-icon{
+    background-image:  url(assets/brightness_5-24px.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 24px; 
+    height: 24px; 
+    margin-left: 12px;
+    float: right;
+
+
+  }
