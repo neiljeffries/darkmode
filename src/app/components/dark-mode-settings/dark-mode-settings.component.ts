@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
-import { DarkmodeService } from 'src/app/services/darkmode.service';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
+import { DarkmodeService } from 'src/app/services/darkmode.service';
+
 
 
 @Component({
@@ -20,11 +20,12 @@ export class DarkModeSettingsComponent {
   sepia: number;
   grayscale: number;
   params: DarkModeParamaters;
+  isIE: boolean;
 
   constructor(
     public darkModeService: DarkmodeService
     ) {
-    this.darkModeService.init();
+
 
     this.darkModeService.darkModeParamsObj.subscribe(params => {
       this.params = params as DarkModeParamaters;
@@ -34,6 +35,8 @@ export class DarkModeSettingsComponent {
       this.sepia = params.sepia;
       this.grayscale = params.grayscale;
     });
+    this.isIE = this.darkModeService.isCrappyBrowser();
+
   }
 
   public setLightMode(): void {

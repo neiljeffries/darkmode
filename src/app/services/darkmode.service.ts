@@ -154,4 +154,11 @@ export class DarkmodeService {
     }
   }
 
+  public isCrappyBrowser() {
+    if ((document as any).documentMode || /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent)) {
+     return true;
+  }
+    return false;
+  }
+
 }

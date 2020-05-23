@@ -37,7 +37,7 @@ table a:link {
   }
   
   table th {
-      padding:21px 25px 22px 25px;
+      padding:8px;
       border-top:1px solid #fafafa;
       border-bottom:1px solid #e0e0e0;
   
@@ -46,8 +46,8 @@ table a:link {
       background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
   }
   table th:first-child {
-      text-align: left;
-      padding-left:10px;
+      /* text-align: left;
+      padding-left:10px; */
   }
   table tr:first-child th:first-child {
       -moz-border-radius-topleft:3px;
@@ -69,7 +69,7 @@ table a:link {
       border-left: 0;
   }
   table td {
-      padding:6px;
+      padding:1px;
       border-top: 1px solid #ffffff;
       border-bottom:1px solid #e0e0e0;
       border-left: 1px solid #e0e0e0;
@@ -108,7 +108,8 @@ table a:link {
     background-position: center;
     width: 24px; 
     height: 24px; 
-    margin-left: 70px;
+    margin-left: 64px;
+    margin-right: 6px;
     float: right;
 
   }
@@ -118,7 +119,8 @@ table a:link {
     background-position: center;
     width: 24px; 
     height: 24px; 
-    margin-left:70px;
+    margin-left:64px;
+    margin-right: 6px;
     float: right;
 
 
