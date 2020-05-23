@@ -1,20 +1,36 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
+<div style="text-align: center;">
+  <h1>Welcome to {{ title }}!</h1>
 
-<div style="margin:20px">
-<button  [style.backgroundColor] = "mode === 'on' ? 'green' : 'white'" (click)="setDarkMode()">Dark</button>
+  <div style="margin: 20px;">
+    <button [style.backgroundColor]="mode === 'on' ? 'lime' : 'white'" (click)="toggleDarkMode()" >
+      Dark Mode is {{mode === 'on' ? 'ON' : 'OFF'}}
+    </button>
+  </div>
+
+  <table style="border: solid 1px #000;">
+    <tr>
+      <td>brightness {{ brightness }}%:</td>
+      <td>
+        <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="150" step="1" [(ngModel)]="brightness" (input)="onBrightnessChange($event)" ></mat-slider>
+      </td>
+    </tr>
+    <tr>
+      <td>contrast {{ contrast }}%:</td>
+      <td>
+        <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="150" step="1" [(ngModel)]="contrast" (input)="onContrastChange($event)" ></mat-slider>
+      </td>
+    </tr>
+    <tr>
+      <td>sepia {{ sepia }}%:</td>
+      <td>
+        <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="100" step="1" [(ngModel)]="sepia" (input)="onSepiaChange($event)" ></mat-slider>
+      </td>
+    </tr>
+    <tr>
+      <td><button (click)="reset()">Reset</button></td>
+      <td></td>
+    </tr>
+  </table>
+  <router-outlet></router-outlet>
 </div>
-
-<div style="margin:20px">
-<button  [style.backgroundColor] = "mode === 'off' ? 'green' : 'black'" (click)="setLightMode()">Light</button>
-</div>
-
-
-<table style="border:solid 1px #000">
-<tr><td>TEST</td></tr>
-
-</table>
-<router-outlet></router-outlet>
