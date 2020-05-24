@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DarkModeSettingsComponent } from './components/dark-mode-settings/dark-mode-settings.component';
 import { DarkmodeService } from './services/darkmode.service';
@@ -10,20 +10,28 @@ import { DarkmodeService } from './services/darkmode.service';
 })
 export class AppComponent {
   title = 'Angular Dark Mode';
-  constructor(public dialog: MatDialog, private darkModeService: DarkmodeService) {
+  open = false;
+  constructor(
+    public dialog: MatDialog,
+    private darkModeService: DarkmodeService) {
     this.darkModeService.init();
-  }
-
-  openDarkModeSettingsDialog() {
-    const dialogRef = this.dialog.open(DarkModeSettingsComponent, {
-    data: {},
-    position: {
-      top: '20px',
-      right: '20px'
     }
-  });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+
+  openDarkModeSettingsDialog(evt: MouseEvent): void {
+    const target = new ElementRef(evt.currentTarget);
+    const dialogRef = this.dialog.open(DarkModeSettingsComponent, {
+      data: { trigger: target },
+      hasBackdrop : false
+    });
+
+    dialogRef.afterClosed().subscribe( result => {
+      console.log(`Dialog Closed result: ${result}`);
+      this.open = false;
+    });
+
+    dialogRef.afterOpened().subscribe( result => {
+      console.log(`Dialog Opened result: ${result}`);
+      this.open = true;
     });
   }
 

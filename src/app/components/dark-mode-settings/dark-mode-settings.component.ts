@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, ElementRef, Inject, OnInit } from '@angular/core';
+import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSliderChange } from '@angular/material/slider';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
@@ -11,8 +11,9 @@ import { DarkmodeService } from 'src/app/services/darkmode.service';
   styleUrls: ['./dark-mode-settings.component.css']
 })
 
-export class DarkModeSettingsComponent {
-
+export class DarkModeSettingsComponent implements OnInit {
+  private readonly matDialogRef: MatDialogRef<DarkModeSettingsComponent>;
+  private readonly triggerElementRef: ElementRef;
 
   darkmode: boolean;
   brightness: number;
@@ -23,25 +24,34 @@ export class DarkModeSettingsComponent {
   isIE: boolean;
 
   constructor(
-    public darkModeService: DarkmodeService, public dialModalRef: MatDialogRef<any>
+    matDialogRef: MatDialogRef<DarkModeSettingsComponent>,
+    @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef },
+    public darkModeService: DarkmodeService,
+    public dialModalRef: MatDialogRef<any>
     ) {
+      this.matDialogRef = matDialogRef;
+      this.triggerElementRef = data.trigger;
 
+      this.darkModeService.darkModeParamsObj.subscribe(params => {
+        this.params = params as DarkModeParamaters;
+        this.darkmode = params.darkmode;
+        this.brightness = params.brightness;
+        this.contrast = params.contrast;
+        this.sepia = params.sepia;
+        this.grayscale = params.grayscale;
+      });
 
-    this.darkModeService.darkModeParamsObj.subscribe(params => {
-      this.params = params as DarkModeParamaters;
-      this.darkmode = params.darkmode;
-      this.brightness = params.brightness;
-      this.contrast = params.contrast;
-      this.sepia = params.sepia;
-      this.grayscale = params.grayscale;
-    });
-    this.isIE = this.darkModeService.isCrappyBrowser();
-  //  this.changePosition();
+      this.isIE = this.darkModeService.isCrappyBrowser();
   }
-//   changePosition() {
-//     console.log('suhfkjsdhfksfhksdhfjksd');
-//     this.dialModalRef.updatePosition({ top: '50px', left: '50px' });
-// }
+
+
+ngOnInit() {
+  const matDialogConfig: MatDialogConfig = new MatDialogConfig();
+  const rect = this.triggerElementRef.nativeElement.getBoundingClientRect();
+  matDialogConfig.position = { left: `${rect.left - 270 }px`, top: `${rect.bottom - 30}px` };
+  this.matDialogRef.updatePosition(matDialogConfig.position);
+}
+
   public setLightMode(): void {
     this.darkModeService.setLightMode();
   }
