@@ -2,7 +2,7 @@ import { Component, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DarkModeSettingsComponent } from './components/dark-mode-settings/dark-mode-settings.component';
 import { DarkmodeService } from './services/darkmode.service';
-
+declare var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -34,5 +34,7 @@ export class AppComponent {
       this.open = true;
     });
   }
+
+ 
 
 }

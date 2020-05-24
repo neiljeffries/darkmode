@@ -5,8 +5,8 @@ import { DarkModeParamaters } from '../interfaces/dark-mode-paramaters';
 
 const defaults: DarkModeParamaters = {
   darkmode: false,
-  brightness: 100,
-  contrast: 100,
+  brightness: 150,
+  contrast: 96,
   sepia: 0,
   grayscale: 0
 };
@@ -139,9 +139,9 @@ export class DarkmodeService {
   }
 
   public reset(): void {
-    this.setBrightness(100);
-    this.setContrast(90);
-    this.setSepia(10);
+    this.setBrightness(150);
+    this.setContrast(96);
+    this.setSepia(0);
     this.setGrayScale(0);
     this.setDarkMode();
   }
