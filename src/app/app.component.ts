@@ -15,10 +15,16 @@ export class AppComponent {
   }
 
   openDarkModeSettingsDialog() {
-    const dialogRef = this.dialog.open(DarkModeSettingsComponent);
+    const dialogRef = this.dialog.open(DarkModeSettingsComponent, {
+    data: {},
+    position: {
+      top: '20px',
+      right: '20px'
+    }
+  });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  
+
 }

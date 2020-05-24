@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { MatSliderChange } from '@angular/material/slider';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
-
 
 
 @Component({
@@ -23,7 +23,7 @@ export class DarkModeSettingsComponent {
   isIE: boolean;
 
   constructor(
-    public darkModeService: DarkmodeService
+    public darkModeService: DarkmodeService, public dialModalRef: MatDialogRef<any>
     ) {
 
 
@@ -36,9 +36,12 @@ export class DarkModeSettingsComponent {
       this.grayscale = params.grayscale;
     });
     this.isIE = this.darkModeService.isCrappyBrowser();
-
+  //  this.changePosition();
   }
-
+//   changePosition() {
+//     console.log('suhfkjsdhfksfhksdhfjksd');
+//     this.dialModalRef.updatePosition({ top: '50px', left: '50px' });
+// }
   public setLightMode(): void {
     this.darkModeService.setLightMode();
   }
