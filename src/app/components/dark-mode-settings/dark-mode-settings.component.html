@@ -3,15 +3,12 @@
   <table cellspacing="0">
     <tr *ngIf="isIE">
       <td colspan="2">
-        <span style="color: red;"
-          >This browser does not support dark mode.<br />Proceed at your own
-          risk...</span
-        >
+        <span style="color: red;">This browser does not support dark mode.</span>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <mat-slide-toggle [(ngModel)]="darkmode" (change)="toggleDarkMode()"
+        <mat-slide-toggle [(ngModel)]="darkmode" (change)="toggleDarkMode()" [disabled]="isIE"
           ><span style="margin-left: 40px;"
             >Dark Mode is: {{ darkmode ? "ON" : "OFF" }}</span
           ><span
@@ -33,6 +30,7 @@
           step="1"
           [(ngModel)]="brightness"
           (input)="onBrightnessChange($event)"
+          [disabled]="isIE"
         ></mat-slider>
       </td>
     </tr>
@@ -49,6 +47,7 @@
           step="1"
           [(ngModel)]="contrast"
           (input)="onContrastChange($event)"
+          [disabled]="isIE"
         ></mat-slider>
       </td>
     </tr>
@@ -65,6 +64,7 @@
           step="1"
           [(ngModel)]="sepia"
           (input)="onSepiaChange($event)"
+          [disabled]="isIE"
         ></mat-slider>
       </td>
     </tr>
@@ -81,12 +81,13 @@
           step="1"
           [(ngModel)]="grayscale"
           (input)="onGrayScaleChange($event)"
+          [disabled]="isIE"
         ></mat-slider>
       </td>
     </tr>
   </table>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button (click)="reset()">Reset</button>
+  <button mat-button (click)="reset()" [disabled]="isIE">Reset</button>
   <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Done</button>
 </mat-dialog-actions>
