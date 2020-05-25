@@ -4,7 +4,6 @@ import { MatSliderChange } from '@angular/material/slider';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
 
-
 @Component({
   selector: 'app-dark-mode-settings',
   templateUrl: './dark-mode-settings.component.html',
@@ -15,11 +14,6 @@ export class DarkModeSettingsComponent implements OnInit {
   private readonly matDialogRef: MatDialogRef<DarkModeSettingsComponent>;
   private readonly triggerElementRef: ElementRef;
 
-  darkmode: boolean;
-  brightness: number;
-  contrast: number;
-  sepia: number;
-  grayscale: number;
   params: DarkModeParamaters;
   isIE: boolean;
 
@@ -34,23 +28,21 @@ export class DarkModeSettingsComponent implements OnInit {
 
       this.darkModeService.darkModeParamsObj.subscribe(params => {
         this.params = params as DarkModeParamaters;
-        this.darkmode = params.darkmode;
-        this.brightness = params.brightness;
-        this.contrast = params.contrast;
-        this.sepia = params.sepia;
-        this.grayscale = params.grayscale;
       });
 
       this.isIE = this.darkModeService.isCrappyBrowser();
   }
 
+  ngOnInit() {
+    this.configureMatDialog();
+  }
 
-ngOnInit() {
-  const matDialogConfig: MatDialogConfig = new MatDialogConfig();
-  const rect = this.triggerElementRef.nativeElement.getBoundingClientRect();
-  matDialogConfig.position = { left: `${rect.left - 270 }px`, top: `${rect.bottom - 30}px` };
-  this.matDialogRef.updatePosition(matDialogConfig.position);
-}
+  configureMatDialog() {
+    const matDialogConfig: MatDialogConfig = new MatDialogConfig();
+    const rect = this.triggerElementRef.nativeElement.getBoundingClientRect();
+    matDialogConfig.position = { left: `${rect.left - 270 }px`, top: `${rect.bottom - 30}px` };
+    this.matDialogRef.updatePosition(matDialogConfig.position);
+  }
 
   public setLightMode(): void {
     this.darkModeService.setLightMode();

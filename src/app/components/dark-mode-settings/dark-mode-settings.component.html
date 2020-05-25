@@ -8,11 +8,11 @@
     </tr>
     <tr>
       <td colspan="2">
-        <mat-slide-toggle [(ngModel)]="darkmode" (change)="toggleDarkMode()" [disabled]="isIE"
+        <mat-slide-toggle [(ngModel)]="params.darkmode" (change)="toggleDarkMode()" [disabled]="isIE"
           ><span style="margin-left: 40px;"
-            >Dark Mode is: {{ darkmode ? "ON" : "OFF" }}</span
+            >Dark Mode is: {{ params.darkmode ? "ON" : "OFF" }}</span
           ><span
-            ngClass="{{ darkmode ? 'darkmode-icon' : 'darkmode-off-icon' }}"
+            ngClass="{{ params.darkmode ? 'darkmode-icon' : 'darkmode-off-icon' }}"
           ></span
         ></mat-slide-toggle>
       </td>
@@ -20,7 +20,7 @@
     <tr>
       <td>Brightness</td>
       <td>
-        {{ brightness }}%
+        {{ params.brightness }}%
         <mat-slider
           thumbLabel
           [displayWith]="darkModeService.formatLabel"
@@ -28,7 +28,7 @@
           min="0"
           max="150"
           step="1"
-          [(ngModel)]="brightness"
+          [(ngModel)]="params.brightness"
           (input)="onBrightnessChange($event)"
           [disabled]="isIE"
         ></mat-slider>
@@ -37,7 +37,7 @@
     <tr>
       <td>Contrast</td>
       <td>
-        {{ contrast }}%
+        {{ params.contrast }}%
         <mat-slider
           thumbLabel
           [displayWith]="darkModeService.formatLabel"
@@ -45,7 +45,7 @@
           min="0"
           max="150"
           step="1"
-          [(ngModel)]="contrast"
+          [(ngModel)]="params.contrast"
           (input)="onContrastChange($event)"
           [disabled]="isIE"
         ></mat-slider>
@@ -54,7 +54,7 @@
     <tr>
       <td>Sepia</td>
       <td>
-        {{ sepia }}%
+        {{ params.sepia }}%
         <mat-slider
           thumbLabel
           [displayWith]="darkModeService.formatLabel"
@@ -62,7 +62,7 @@
           min="0"
           max="100"
           step="1"
-          [(ngModel)]="sepia"
+          [(ngModel)]="params.sepia"
           (input)="onSepiaChange($event)"
           [disabled]="isIE"
         ></mat-slider>
@@ -71,7 +71,7 @@
     <tr>
       <td>Grayscale</td>
       <td>
-        {{ grayscale }}%
+        {{ params.grayscale }}%
         <mat-slider
           thumbLabel
           [displayWith]="darkModeService.formatLabel"
@@ -79,7 +79,7 @@
           min="0"
           max="100"
           step="1"
-          [(ngModel)]="grayscale"
+          [(ngModel)]="params.grayscale"
           (input)="onGrayScaleChange($event)"
           [disabled]="isIE"
         ></mat-slider>

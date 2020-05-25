@@ -21,14 +21,7 @@ export class DarkmodeService {
   private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>(defaults);
   darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
 
-  public updateParams(darkmode: boolean, brightness: number, contrast: number, sepia: number, grayscale: number) {
-    const currentParams = this.darkModeParamsObjSubject.getValue();
-    const newParams: DarkModeParamaters = currentParams;
-    newParams.darkmode = darkmode;
-    newParams.brightness = brightness;
-    newParams.contrast = contrast;
-    newParams.sepia = sepia;
-    newParams.grayscale = grayscale;
+  public updateParams(newParams: DarkModeParamaters) {
     localStorage.setItem('darkModeParams', JSON.stringify(newParams));
     this.darkModeParamsObjSubject.next(newParams);
   }
@@ -36,12 +29,14 @@ export class DarkmodeService {
   public setLightMode() {
     disableDarkMode();
     const params = this.darkModeParamsObjSubject.getValue();
-    this.updateParams(false, params.brightness, params.contrast, params.sepia, params.grayscale);
+    params.darkmode = false;
+    this.updateParams(params);
   }
 
   public setDarkMode() {
     const params = this.darkModeParamsObjSubject.getValue();
-    this.updateParams(true, params.brightness, params.contrast, params.sepia, params.grayscale);
+    params.darkmode = true;
+    this.updateParams(params);
     try {
       enableDarkMode({
         brightness: params.brightness,
@@ -58,7 +53,7 @@ export class DarkmodeService {
     if (localStorage.getItem('darkModeParams') === null || localStorage.getItem('darkModeParams') === undefined) {
       this.setLightMode();
     } else {
-      this.updateParams(this.getMode(), this.getBrightness(), this.getContrast(), this.getSepia(), this.getGrayScale());
+      this.updateParams(this.getLocalStorage());
       if (this.getMode()) {
         try {
           enableDarkMode({
