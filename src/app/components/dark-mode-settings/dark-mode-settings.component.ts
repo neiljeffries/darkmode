@@ -18,6 +18,7 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
   params: DarkModeParamaters;
   isIE: boolean;
   paramsSubscription: Subscription;
+  saveResp: string;
 
   constructor(
     matDialogRef: MatDialogRef<DarkModeSettingsComponent>,
@@ -74,6 +75,9 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    this.darkModeService.saveSubjectToLocalStorage();
+    this.saveResp = this.darkModeService.saveSubjectToLocalStorage();
+    if ( this.saveResp === 'Saved!' ) {
+      setTimeout(() => this.matDialogRef.close(), 500);
+    }
   }
 }

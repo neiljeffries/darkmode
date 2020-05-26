@@ -99,9 +99,14 @@ export class DarkmodeService {
     this.setDarkMode();
   }
 
-  public saveSubjectToLocalStorage(): void {
+  public saveSubjectToLocalStorage(): string {
     const params = this.darkModeParamsObjSubject.getValue();
-    localStorage.setItem('darkModeParams', JSON.stringify(params));
+    try {
+      localStorage.setItem('darkModeParams', JSON.stringify(params));
+      return 'Saved!';
+    } catch (e) {
+      return 'Save Failed!';
+    }
   }
 
   public getLocalStorage(): DarkModeParamaters {
