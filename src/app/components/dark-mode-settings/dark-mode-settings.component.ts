@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnInit } from '@angular/core';
-import { MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogConfig, MatDialogRef, MatSlideToggleChange, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSliderChange } from '@angular/material/slider';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
@@ -37,42 +37,37 @@ export class DarkModeSettingsComponent implements OnInit {
     this.configureMatDialog();
   }
 
-  configureMatDialog() {
+  public configureMatDialog(): void {
     const matDialogConfig: MatDialogConfig = new MatDialogConfig();
     const rect = this.triggerElementRef.nativeElement.getBoundingClientRect();
     matDialogConfig.position = { left: `${rect.left - 270 }px`, top: `${rect.bottom - 30}px` };
     this.matDialogRef.updatePosition(matDialogConfig.position);
   }
 
-  public setLightMode(): void {
-    this.darkModeService.setLightMode();
-  }
-
-  public setDarkMode(): void {
-    this.darkModeService.setDarkMode();
-  }
-
   public reset(): void {
     this.darkModeService.reset();
   }
 
-  public onBrightnessChange(event: MatSliderChange) {
+  public onBrightnessChange(event: MatSliderChange): void {
      this.darkModeService.setBrightness(event.value);
   }
 
-  public onContrastChange(event: MatSliderChange) {
+  public onContrastChange(event: MatSliderChange): void {
     this.darkModeService.setContrast(event.value);
   }
 
-  public onSepiaChange(event: MatSliderChange) {
+  public onSepiaChange(event: MatSliderChange): void {
     this.darkModeService.setSepia(event.value);
   }
-  public onGrayScaleChange(event: MatSliderChange) {
+  public onGrayScaleChange(event: MatSliderChange): void {
     this.darkModeService.setGrayScale(event.value);
   }
 
-  public toggleDarkMode(): void {
-    this.darkModeService.toggleDarkMode();
+  public toggleDarkMode(event: MatSlideToggleChange): void {
+    this.darkModeService.toggleDarkMode(event.checked);
   }
 
+  public save(): void {
+    this.darkModeService.saveSubjectToLocalStorage();
+  }
 }

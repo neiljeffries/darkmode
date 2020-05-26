@@ -25,16 +25,16 @@ export class AppComponent {
     });
 
     dialogRef.afterClosed().subscribe( result => {
-      console.log(`Dialog Closed result: ${result}`);
+      console.log(`DarkMode Settings Dialog Closed: ${result}`);
       this.open = false;
     });
 
     dialogRef.afterOpened().subscribe( result => {
-      console.log(`Dialog Opened result: ${result}`);
+      console.log(`DarkMode Settings Dialog Opened: ${result}`);
       this.open = true;
     });
   }
 
- 
+
 
 }

@@ -21,22 +21,17 @@ export class DarkmodeService {
   private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>(defaults);
   darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
 
-  public updateParams(newParams: DarkModeParamaters) {
-    localStorage.setItem('darkModeParams', JSON.stringify(newParams));
-    this.darkModeParamsObjSubject.next(newParams);
-  }
-
-  public setLightMode() {
+   public turnDarkModeOff(): void {
     disableDarkMode();
-    const params = this.darkModeParamsObjSubject.getValue();
+    const params: DarkModeParamaters = this.darkModeParamsObjSubject.getValue();
     params.darkmode = false;
-    this.updateParams(params);
+    this.darkModeParamsObjSubject.next(params);
   }
 
-  public setDarkMode() {
-    const params = this.darkModeParamsObjSubject.getValue();
+  public setDarkMode(): void {
+    const params: DarkModeParamaters = this.darkModeParamsObjSubject.getValue();
     params.darkmode = true;
-    this.updateParams(params);
+    this.darkModeParamsObjSubject.next(params);
     try {
       enableDarkMode({
         brightness: params.brightness,
@@ -50,23 +45,24 @@ export class DarkmodeService {
   }
 
   public init(): void {
-    if (localStorage.getItem('darkModeParams') === null || localStorage.getItem('darkModeParams') === undefined) {
-      this.setLightMode();
+    if (!localStorage.hasOwnProperty('darkModeParams')) {
+      this.turnDarkModeOff();
     } else {
-      this.updateParams(this.getLocalStorage());
-      if (this.getMode()) {
+      const params: DarkModeParamaters = this.getLocalStorage();
+      this.darkModeParamsObjSubject.next(params);
+      if (params.darkmode) {
         try {
           enableDarkMode({
-            brightness: this.getBrightness(),
-            contrast: this.getContrast(),
-            sepia: this.getSepia(),
-            grayscale: this.getGrayScale()
+            brightness: params.brightness,
+            contrast: params.contrast,
+            sepia: params.sepia,
+            grayscale: params.grayscale
           });
         } catch (e) {
           console.log('IE11 is trash');
         }
       } else {
-        this.setLightMode();
+        this.turnDarkModeOff();
       }
     }
   }
@@ -75,59 +71,40 @@ export class DarkmodeService {
     return value + '%';
   }
 
-  public getMode(): boolean {
-    return this.getLocalStorage().darkmode;
-  }
-
-  public getBrightness(): number {
-    return this.getLocalStorage().brightness;
-  }
-
-  public getContrast(): number {
-    return this.getLocalStorage().contrast;
-  }
-
-  public getSepia(): number {
-    return this.getLocalStorage().sepia;
-  }
-
-  public getGrayScale(): number {
-    return this.getLocalStorage().grayscale;
-  }
-
   public setBrightness(value: number): void {
     const params = this.darkModeParamsObjSubject.getValue();
     params.brightness = value;
-    this.saveLocalStorage(params);
+    this.darkModeParamsObjSubject.next(params);
+    this.setDarkMode();
   }
 
   public setContrast(value: number): void {
     const params = this.darkModeParamsObjSubject.getValue();
     params.contrast = value;
-    this.saveLocalStorage(params);
+    this.darkModeParamsObjSubject.next(params);
+    this.setDarkMode();
   }
 
   public setSepia(value: number): void {
     const params = this.darkModeParamsObjSubject.getValue();
     params.sepia = value;
-    this.saveLocalStorage(params);
+    this.darkModeParamsObjSubject.next(params);
+    this.setDarkMode();
   }
 
   public setGrayScale(value: number): void {
     const params = this.darkModeParamsObjSubject.getValue();
     params.grayscale = value;
-    this.saveLocalStorage(params);
+    this.darkModeParamsObjSubject.next(params);
+    this.setDarkMode();
   }
 
-  saveLocalStorage(newParams) {
-    localStorage.setItem('darkModeParams', JSON.stringify(newParams));
-    this.darkModeParamsObjSubject.next(newParams);
-    if (this.darkModeParamsObjSubject.getValue().darkmode) {
-      this.setDarkMode();
-    }
+  public saveSubjectToLocalStorage(): void {
+    const params = this.darkModeParamsObjSubject.getValue();
+    localStorage.setItem('darkModeParams', JSON.stringify(params));
   }
 
-  getLocalStorage(): DarkModeParamaters {
+  public getLocalStorage(): DarkModeParamaters {
     const params: string = localStorage.getItem('darkModeParams');
     const paramsParsed: DarkModeParamaters = JSON.parse(params);
     return paramsParsed;
@@ -141,15 +118,15 @@ export class DarkmodeService {
     this.setDarkMode();
   }
 
-  public toggleDarkMode(): void {
-    if (this.getMode()) {
-      this.setLightMode();
-    } else {
+  public toggleDarkMode(checked: boolean): void {
+    if (checked) {
       this.setDarkMode();
-    }
+    } else {
+      this.turnDarkModeOff();
+     }
   }
 
-  public isCrappyBrowser() {
+  public isCrappyBrowser(): boolean {
     if ((document as any).documentMode || /Edge/.test(navigator.userAgent) || /Edg/.test(navigator.userAgent)) {
      return true;
   }
