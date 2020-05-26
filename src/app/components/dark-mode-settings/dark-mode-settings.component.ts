@@ -1,6 +1,7 @@
-import { Component, ElementRef, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogConfig, MatDialogRef, MatSlideToggleChange, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSliderChange } from '@angular/material/slider';
+import { Subscription } from 'rxjs';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
 
@@ -10,12 +11,13 @@ import { DarkmodeService } from 'src/app/services/darkmode.service';
   styleUrls: ['./dark-mode-settings.component.css']
 })
 
-export class DarkModeSettingsComponent implements OnInit {
+export class DarkModeSettingsComponent implements OnInit, OnDestroy {
   private readonly matDialogRef: MatDialogRef<DarkModeSettingsComponent>;
   private readonly triggerElementRef: ElementRef;
 
   params: DarkModeParamaters;
   isIE: boolean;
+  paramsSubscription: Subscription;
 
   constructor(
     matDialogRef: MatDialogRef<DarkModeSettingsComponent>,
@@ -26,7 +28,7 @@ export class DarkModeSettingsComponent implements OnInit {
       this.matDialogRef = matDialogRef;
       this.triggerElementRef = data.trigger;
 
-      this.darkModeService.darkModeParamsObj.subscribe(params => {
+      this.paramsSubscription = this.darkModeService.darkModeParamsObj.subscribe(params => {
         this.params = params as DarkModeParamaters;
       });
 
@@ -35,6 +37,10 @@ export class DarkModeSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.configureMatDialog();
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   public configureMatDialog(): void {
