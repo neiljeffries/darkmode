@@ -8,9 +8,8 @@ import { DarkmodeService } from 'src/app/services/darkmode.service';
 @Component({
   selector: 'app-dark-mode-settings',
   templateUrl: './dark-mode-settings.component.html',
-  styleUrls: ['./dark-mode-settings.component.css']
+  styleUrls: ['./dark-mode-settings.component.css'],
 })
-
 export class DarkModeSettingsComponent implements OnInit, OnDestroy {
   private readonly matDialogRef: MatDialogRef<DarkModeSettingsComponent>;
   private readonly triggerElementRef: ElementRef;
@@ -25,15 +24,17 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef },
     public darkModeService: DarkmodeService,
     public dialModalRef: MatDialogRef<any>
-    ) {
-      this.matDialogRef = matDialogRef;
-      this.triggerElementRef = data.trigger;
+  ) {
+    this.matDialogRef = matDialogRef;
+    this.triggerElementRef = data.trigger;
 
-      this.paramsSubscription = this.darkModeService.darkModeParamsObj.subscribe(params => {
+    this.paramsSubscription = this.darkModeService.darkModeParamsObj.subscribe(
+      (params) => {
         this.params = params as DarkModeParamaters;
-      });
+      }
+    );
 
-      this.isIE = this.darkModeService.isCrappyBrowser();
+    this.isIE = this.darkModeService.isCrappyBrowser();
   }
 
   ngOnInit() {
@@ -47,8 +48,16 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
   public configureMatDialog(): void {
     const matDialogConfig: MatDialogConfig = new MatDialogConfig();
     const rect = this.triggerElementRef.nativeElement.getBoundingClientRect();
-    matDialogConfig.position = { left: `${rect.left - 270 }px`, top: `${rect.bottom - 30}px` };
+    matDialogConfig.position = {
+      left: `${rect.left - 200}px`,
+      top: `${rect.bottom - 10}px`,
+    };
     this.matDialogRef.updatePosition(matDialogConfig.position);
+  }
+
+  public cancel(): void {
+    this.dialModalRef.close();
+    this.darkModeService.cancel();
   }
 
   public reset(): void {
@@ -56,7 +65,7 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onBrightnessChange(event: MatSliderChange): void {
-     this.darkModeService.setBrightness(event.value);
+    this.darkModeService.setBrightness(event.value);
   }
 
   public onContrastChange(event: MatSliderChange): void {
@@ -76,7 +85,7 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
 
   public save(): void {
     this.saveResp = this.darkModeService.saveSubjectToLocalStorage();
-    if ( this.saveResp === 'Saved!' ) {
+    if (this.saveResp === 'Saved!') {
       setTimeout(() => this.matDialogRef.close(), 500);
     }
   }
