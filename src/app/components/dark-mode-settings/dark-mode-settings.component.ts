@@ -38,7 +38,7 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.configureMatDialog();
+   // this.configureMatDialog();
   }
 
   ngOnDestroy() {

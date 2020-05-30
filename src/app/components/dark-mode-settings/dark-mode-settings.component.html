@@ -15,7 +15,7 @@
          <td>
             {{ params.brightness }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="150" step="1"
-               [(ngModel)]="params.brightness" (input)="onBrightnessChange($event)">
+               [(ngModel)]="params.brightness" (change)="onBrightnessChange($event)">
             </mat-slider>
          </td>
       </tr>
@@ -24,7 +24,7 @@
          <td>
             {{ params.contrast }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="150" step="1"
-               [(ngModel)]="params.contrast" (input)="onContrastChange($event)"></mat-slider>
+               [(ngModel)]="params.contrast" (change)="onContrastChange($event)"></mat-slider>
          </td>
       </tr>
       <tr>
@@ -32,7 +32,7 @@
          <td>
             {{ params.sepia }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="100" step="1"
-            [(ngModel)]="params.sepia" (input)="onSepiaChange($event)"></mat-slider>
+            [(ngModel)]="params.sepia" (change)="onSepiaChange($event)"></mat-slider>
          </td>
       </tr>
       <tr>
@@ -40,7 +40,7 @@
          <td>
             {{ params.grayscale }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="100" step="1"
-               [(ngModel)]="params.grayscale" (input)="onGrayScaleChange($event)"></mat-slider>
+               [(ngModel)]="params.grayscale" (change)="onGrayScaleChange($event)"></mat-slider>
          </td>
       </tr>
    </table>
