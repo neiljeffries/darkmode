@@ -17,9 +17,7 @@ const defaults: DarkModeParamaters = {
 export class DarkmodeService {
    constructor() {}
 
-   private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>(
-      defaults
-   );
+   private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>( defaults );
    darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
 
    public turnDarkModeOff(): void {
@@ -33,16 +31,7 @@ export class DarkmodeService {
       const params: DarkModeParamaters = this.darkModeParamsObjSubject.getValue();
       params.darkmode = true;
       this.darkModeParamsObjSubject.next(params);
-      try {
-         enableDarkMode({
-            brightness: params.brightness,
-            contrast: params.contrast,
-            sepia: params.sepia,
-            grayscale: params.grayscale,
-         });
-      } catch (e) {
-         console.log('IE11 is trash');
-      }
+      enableDarkMode({brightness: params.brightness, contrast: params.contrast, sepia: params.sepia, grayscale: params.grayscale});
    }
 
    public init(): void {
@@ -52,16 +41,7 @@ export class DarkmodeService {
          const params: DarkModeParamaters = this.getLocalStorage();
          this.darkModeParamsObjSubject.next(params);
          if (params.darkmode) {
-            try {
-               enableDarkMode({
-                  brightness: params.brightness,
-                  contrast: params.contrast,
-                  sepia: params.sepia,
-                  grayscale: params.grayscale,
-               });
-            } catch (e) {
-               console.log('IE11 is trash');
-            }
+            enableDarkMode({brightness: params.brightness, contrast: params.contrast, sepia: params.sepia, grayscale: params.grayscale});
          } else {
             this.turnDarkModeOff();
          }

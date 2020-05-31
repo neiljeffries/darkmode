@@ -1,7 +1,8 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDialogConfig, MatDialogRef, MatSlideToggleChange, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSlideToggleChange, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSliderChange } from '@angular/material/slider';
 import { Subscription } from 'rxjs';
+import { SlideInOutAnimation } from 'src/app/interfaces/animations';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
 
@@ -9,15 +10,15 @@ import { DarkmodeService } from 'src/app/services/darkmode.service';
   selector: 'app-dark-mode-settings',
   templateUrl: './dark-mode-settings.component.html',
   styleUrls: ['./dark-mode-settings.component.css'],
+  animations: [SlideInOutAnimation]
 })
-export class DarkModeSettingsComponent implements OnInit, OnDestroy {
+export class DarkModeSettingsComponent implements OnDestroy {
   private readonly matDialogRef: MatDialogRef<DarkModeSettingsComponent>;
-  private readonly triggerElementRef: ElementRef;
-
   params: DarkModeParamaters;
-  isIE: boolean;
+  isIE: boolean =  this.darkModeService.isCrappyBrowser();
   paramsSubscription: Subscription;
   saveResp: string;
+  animationState: string;
 
   constructor(
     matDialogRef: MatDialogRef<DarkModeSettingsComponent>,
@@ -26,33 +27,17 @@ export class DarkModeSettingsComponent implements OnInit, OnDestroy {
     public dialModalRef: MatDialogRef<any>
   ) {
     this.matDialogRef = matDialogRef;
-    this.triggerElementRef = data.trigger;
 
     this.paramsSubscription = this.darkModeService.darkModeParamsObj.subscribe(
-      (params) => {
-        this.params = params as DarkModeParamaters;
+      (paramaters: DarkModeParamaters) => {
+        this.params = paramaters;
+        this.animationState = this.params.darkmode ? 'in' : 'out';
       }
     );
-
-    this.isIE = this.darkModeService.isCrappyBrowser();
-  }
-
-  ngOnInit() {
-   // this.configureMatDialog();
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
-  }
-
-  public configureMatDialog(): void {
-    const matDialogConfig: MatDialogConfig = new MatDialogConfig();
-    const rect = this.triggerElementRef.nativeElement.getBoundingClientRect();
-    matDialogConfig.position = {
-      left: `${rect.left - 200}px`,
-      top: `${rect.bottom - 10}px`,
-    };
-    this.matDialogRef.updatePosition(matDialogConfig.position);
   }
 
   public cancel(): void {

@@ -8,46 +8,46 @@
     </mat-slide-toggle>
   </p>
 
-  <p *ngIf="isIE" style="text-align: center; padding-top:8px;">
-    <span style="color: red;">Sorry, this browser does not support dark mode. Try a newer browser!</span>
+  <p *ngIf="isIE" style="text-align: center; padding:8px;">
+    <span style="color: red;">
+      Sorry, this browser does not support
+      dark mode. Try a newer browser!
+    </span>
   </p>
 
-
-  <table *ngIf="params.darkmode">
+  <div style="height: 250px" [@slideInOut]="animationState">
+  <table>
       <tr>
          <td>Brightness</td>
-         <td>
-            {{ params.brightness }}%
-            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="150" step="1"
+         <td>{{ params.brightness }}%
+            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="150"
                [(ngModel)]="params.brightness" (change)="onBrightnessChange($event)">
             </mat-slider>
          </td>
       </tr>
       <tr>
          <td>Contrast</td>
-         <td>
-            {{ params.contrast }}%
-            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="150" step="1"
+         <td>{{ params.contrast }}%
+            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="150"
                [(ngModel)]="params.contrast" (change)="onContrastChange($event)"></mat-slider>
          </td>
       </tr>
       <tr>
          <td>Sepia</td>
-         <td>
-            {{ params.sepia }}%
-            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="100" step="1"
+         <td>{{ params.sepia }}%
+            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="100"
             [(ngModel)]="params.sepia" (change)="onSepiaChange($event)"></mat-slider>
          </td>
       </tr>
       <tr>
          <td>Grayscale</td>
-         <td>
-            {{ params.grayscale }}%
-            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" tickInterval="1" min="0" max="100" step="1"
+         <td>{{ params.grayscale }}%
+            <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="100"
                [(ngModel)]="params.grayscale" (change)="onGrayScaleChange($event)"></mat-slider>
          </td>
       </tr>
    </table>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
    <button mat-flat-button (click)="cancel()" color="default">Cancel</button>
