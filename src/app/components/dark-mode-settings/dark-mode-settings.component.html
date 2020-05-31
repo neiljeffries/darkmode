@@ -10,12 +10,12 @@
 
   <p *ngIf="isIE" style="text-align: center; padding:8px;">
     <span style="color: red;">
-      Sorry, this browser does not support
+      Uh Oh, this browser does not support
       dark mode. Try a newer browser!
     </span>
   </p>
 
-  <div style="height: 250px" [@slideInOut]="animationState">
+  <div style="overflow: hidden;" [@slideInOut]="animationState">
   <table>
       <tr>
          <td>Brightness</td>
@@ -51,5 +51,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="center">
    <button mat-flat-button (click)="cancel()" color="default">Cancel</button>
-   <button mat-flat-button (click)="save()" cdkFocusInitial color="primary" [disabled]="isIE">{{ saveResp ? saveResp : "Save" }}</button>
+   <button mat-flat-button (click)="save()" cdkFocusInitial color="primary" *ngIf="!isIE">{{ saveResp ? saveResp : "Save" }}</button>
 </mat-dialog-actions>
