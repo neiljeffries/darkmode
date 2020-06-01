@@ -3,7 +3,7 @@
 
   <p *ngIf="!isIE" style="text-align: center; padding-top:8px;">
     <label style="margin-right: 6px; vertical-align: text-bottom;">Dark Mode:</label>
-    <mat-slide-toggle [(ngModel)]="params.darkmode" (change)="toggleDarkMode($event)">
+    <mat-slide-toggle [(ngModel)]="params.darkmode" (change)="darkModeService.toggleDarkMode($event.checked)">
      <span>{{ params.darkmode ? "ON" : "OFF" }}</span>
     </mat-slide-toggle>
   </p>
@@ -15,13 +15,13 @@
     </span>
   </p>
 
-  <div style="overflow: hidden;" [@slideInOut]="animationState">
+  <div [@slideInOut]="animationState">
   <table>
       <tr>
          <td>Brightness</td>
          <td>{{ params.brightness }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="150"
-               [(ngModel)]="params.brightness" (change)="onBrightnessChange($event)">
+               [(ngModel)]="params.brightness" (change)="darkModeService.adjustValue('brightness', $event.value)">
             </mat-slider>
          </td>
       </tr>
@@ -29,21 +29,21 @@
          <td>Contrast</td>
          <td>{{ params.contrast }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="150"
-               [(ngModel)]="params.contrast" (change)="onContrastChange($event)"></mat-slider>
+               [(ngModel)]="params.contrast" (change)="darkModeService.adjustValue('contrast', $event.value)"></mat-slider>
          </td>
       </tr>
       <tr>
          <td>Sepia</td>
          <td>{{ params.sepia }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="100"
-            [(ngModel)]="params.sepia" (change)="onSepiaChange($event)"></mat-slider>
+            [(ngModel)]="params.sepia" (change)="darkModeService.adjustValue('sepia', $event.value)"></mat-slider>
          </td>
       </tr>
       <tr>
          <td>Grayscale</td>
          <td>{{ params.grayscale }}%
             <mat-slider thumbLabel [displayWith]="darkModeService.formatLabel" max="100"
-               [(ngModel)]="params.grayscale" (change)="onGrayScaleChange($event)"></mat-slider>
+               [(ngModel)]="params.grayscale" (change)="darkModeService.adjustValue('grayscale', $event.value)"></mat-slider>
          </td>
       </tr>
    </table>
@@ -51,5 +51,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="center">
    <button mat-flat-button (click)="cancel()" color="default">Cancel</button>
-   <button mat-flat-button (click)="save()" cdkFocusInitial color="primary" *ngIf="!isIE">{{ saveResp ? saveResp : "Save" }}</button>
+   <button mat-flat-button (click)="save()" color="primary" *ngIf="!isIE">{{ saveResp ? saveResp : "Save" }}</button>
 </mat-dialog-actions>

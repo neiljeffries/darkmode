@@ -1,6 +1,5 @@
-import { Component, ElementRef, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDialogRef, MatSlideToggleChange, MAT_DIALOG_DATA } from '@angular/material';
-import { MatSliderChange } from '@angular/material/slider';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { SlideInOutAnimation } from 'src/app/interfaces/animations';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
@@ -13,7 +12,6 @@ import { DarkmodeService } from 'src/app/services/darkmode.service';
   animations: [SlideInOutAnimation]
 })
 export class DarkModeSettingsComponent implements OnDestroy {
-  private readonly matDialogRef: MatDialogRef<DarkModeSettingsComponent>;
   params: DarkModeParamaters;
   isIE: boolean =  this.darkModeService.isCrappyBrowser();
   paramsSubscription: Subscription;
@@ -21,13 +19,10 @@ export class DarkModeSettingsComponent implements OnDestroy {
   animationState: string;
 
   constructor(
-    matDialogRef: MatDialogRef<DarkModeSettingsComponent>,
-    @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef },
+    private matDialogRef: MatDialogRef<DarkModeSettingsComponent>,
+    @Inject(MAT_DIALOG_DATA) data: {},
     public darkModeService: DarkmodeService,
-    public dialModalRef: MatDialogRef<any>
   ) {
-    this.matDialogRef = matDialogRef;
-
     this.paramsSubscription = this.darkModeService.darkModeParamsObj.subscribe(
       (paramaters: DarkModeParamaters) => {
         this.params = paramaters;
@@ -41,31 +36,8 @@ export class DarkModeSettingsComponent implements OnDestroy {
   }
 
   public cancel(): void {
-    this.dialModalRef.close();
-    this.darkModeService.cancel();
-  }
-
-  public reset(): void {
-    this.darkModeService.reset();
-  }
-
-  public onBrightnessChange(event: MatSliderChange): void {
-    this.darkModeService.setBrightness(event.value);
-  }
-
-  public onContrastChange(event: MatSliderChange): void {
-    this.darkModeService.setContrast(event.value);
-  }
-
-  public onSepiaChange(event: MatSliderChange): void {
-    this.darkModeService.setSepia(event.value);
-  }
-  public onGrayScaleChange(event: MatSliderChange): void {
-    this.darkModeService.setGrayScale(event.value);
-  }
-
-  public toggleDarkMode(event: MatSlideToggleChange): void {
-    this.darkModeService.toggleDarkMode(event.checked);
+    this.matDialogRef.close();
+    this.darkModeService.init();
   }
 
   public save(): void {

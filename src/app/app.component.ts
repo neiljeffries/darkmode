@@ -1,10 +1,8 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DarkModeSettingsComponent } from './components/dark-mode-settings/dark-mode-settings.component';
 import { DarkmodeService } from './services/darkmode.service';
 import { SlideInOutAnimation } from './interfaces/animations';
-// import { SlideInOutAnimation } from './animations';
-declare var $: any;
 
 @Component({
   selector: 'app-root',
@@ -13,8 +11,8 @@ declare var $: any;
   animations: [SlideInOutAnimation]
 })
 export class AppComponent {
-  title = 'Angular Dark Mode';
-  dialogRef: MatDialogRef<DarkModeSettingsComponent> = null;
+
+  dialogRef: MatDialogRef<DarkModeSettingsComponent>;
 
   constructor(
     public dialog: MatDialog,
@@ -23,11 +21,10 @@ export class AppComponent {
     this.darkModeService.init();
   }
 
-  openDarkModeSettingsDialog(evt: MouseEvent): void {
-    const target = new ElementRef(evt.currentTarget);
-    if (!this.dialogRef) {
+  openDialog(): void {
 
-      this.dialogRef = this.dialog.open(DarkModeSettingsComponent, { data: { trigger: target }, hasBackdrop: false, width: '275px' });
+    if (!this.dialogRef) {
+      this.dialogRef = this.dialog.open(DarkModeSettingsComponent, { data: {}, hasBackdrop: false, width: '275px' });
 
       this.dialogRef.afterClosed().subscribe((result) => {
         console.log(`Closed: ${result}`);
