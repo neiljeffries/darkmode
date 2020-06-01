@@ -22,12 +22,11 @@ export class DarkmodeService {
 
   public setDarkMode(enabled: boolean): void {
     const params: DarkModeParamaters = this.darkModeParamsObjSubject.getValue();
+    params.darkmode = enabled;
     if (enabled) {
-      params.darkmode = true;
       enableDarkMode(params);
     } else {
       disableDarkMode();
-      params.darkmode = false;
     }
     this.darkModeParamsObjSubject.next(params);
   }
