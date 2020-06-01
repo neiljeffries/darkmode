@@ -3,6 +3,7 @@ import { disable as disableDarkMode, enable as enableDarkMode } from 'darkreader
 import { BehaviorSubject } from 'rxjs';
 import { DarkModeParamaters } from '../interfaces/dark-mode-paramaters';
 
+const LOCAL_STORAGE_KEY = 'darkModeParams';
 const defaults: DarkModeParamaters = {
   darkmode: false,
   brightness: 150,
@@ -32,7 +33,7 @@ export class DarkmodeService {
   }
 
   public init(): void {
-    if (!localStorage.hasOwnProperty('darkModeParams')) {
+    if (!localStorage.hasOwnProperty(LOCAL_STORAGE_KEY)) {
       this.setDarkMode(false);
     } else {
       const params: DarkModeParamaters = this.getLocalStorage();
@@ -59,7 +60,7 @@ export class DarkmodeService {
   public saveSubjectToLocalStorage(): string {
     const params = this.darkModeParamsObjSubject.getValue();
     try {
-      localStorage.setItem('darkModeParams', JSON.stringify(params));
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(params));
       return 'Saved!';
     } catch (e) {
       return 'Save Failed!';
@@ -67,7 +68,7 @@ export class DarkmodeService {
   }
 
   public getLocalStorage(): DarkModeParamaters {
-    const params: string = localStorage.getItem('darkModeParams');
+    const params: string = localStorage.getItem(LOCAL_STORAGE_KEY);
     const paramsParsed: DarkModeParamaters = JSON.parse(params);
     return paramsParsed;
   }
