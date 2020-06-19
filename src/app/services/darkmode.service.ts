@@ -3,6 +3,9 @@ import { disable as disableDarkMode, enable as enableDarkMode } from 'darkreader
 import { BehaviorSubject } from 'rxjs';
 import { DarkModeParamaters } from '../interfaces/dark-mode-paramaters';
 
+const isEdgeChromium = /^(?=.*\bedg\b)(?=.*\bchrome\b).*$/.test(navigator.userAgent.toLowerCase())
+|| /^(?=.*\bedge\b)(?=.*\bchromium\b).*$/.test(navigator.userAgent.toLowerCase());
+
 const LOCAL_STORAGE_KEY = 'darkModeParams';
 const defaults: DarkModeParamaters = {
   darkmode: false,
@@ -16,7 +19,9 @@ const defaults: DarkModeParamaters = {
   providedIn: 'root',
 })
 export class DarkmodeService {
-  constructor() {}
+  constructor() {
+  //  this.getBrowser();
+  }
 
   private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>(defaults);
   darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
@@ -82,13 +87,16 @@ export class DarkmodeService {
   }
 
   public isCrappyBrowser(): boolean {
-    if (
-      (document as any).documentMode ||
-      /Edge/.test(navigator.userAgent) ||
-      /Edg/.test(navigator.userAgent)
-    ) {
+    /** No IE11 or Edge support, allow Edge Chromium */
+    if ((document as any).documentMode || /edge/.test(navigator.userAgent.toLowerCase()) && !isEdgeChromium) {
       return true;
     }
     return false;
   }
+
+
+
+
+
+
 }
