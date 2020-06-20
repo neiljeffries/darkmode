@@ -1,29 +1,17 @@
 import { Injectable } from '@angular/core';
 import { disable as disableDarkMode, enable as enableDarkMode } from 'darkreader';
 import { BehaviorSubject } from 'rxjs';
+import { constants } from '../constants';
 import { DarkModeParamaters } from '../interfaces/dark-mode-paramaters';
 
-const isEdgeChromium = /^(?=.*\bedg\b)(?=.*\bchrome\b).*$/.test(navigator.userAgent.toLowerCase())
-|| /^(?=.*\bedge\b)(?=.*\bchromium\b).*$/.test(navigator.userAgent.toLowerCase());
-
-const LOCAL_STORAGE_KEY = 'darkModeParams';
-const defaults: DarkModeParamaters = {
-  darkmode: false,
-  brightness: 150,
-  contrast: 96,
-  sepia: 0,
-  grayscale: 0,
-};
 
 @Injectable({
   providedIn: 'root',
 })
 export class DarkmodeService {
-  constructor() {
-  //  this.getBrowser();
-  }
+  constructor() {}
 
-  private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>(defaults);
+  private darkModeParamsObjSubject = new BehaviorSubject<DarkModeParamaters>( constants.DEFAULTS );
   darkModeParamsObj = this.darkModeParamsObjSubject.asObservable();
 
   public setDarkMode(enabled: boolean): void {
@@ -37,22 +25,22 @@ export class DarkmodeService {
     this.darkModeParamsObjSubject.next(params);
   }
 
-  public init(): void {
-    if (!localStorage.hasOwnProperty(LOCAL_STORAGE_KEY)) {
-      this.setDarkMode(false);
+  public initializeDarkMode(): void {
+    if ( !localStorage.hasOwnProperty( constants.DARKMODE_LOCAL_STORAGE_KEY ) ) {
+      this.setDarkMode( false );
     } else {
-      const params: DarkModeParamaters = this.getLocalStorage();
-      this.darkModeParamsObjSubject.next(params);
-      if (params.darkmode) {
-        enableDarkMode(params);
+      const params: DarkModeParamaters = this.getLocalStorage( constants.DARKMODE_LOCAL_STORAGE_KEY );
+      this.darkModeParamsObjSubject.next( params );
+      if ( params.darkmode ) {
+        enableDarkMode( params );
       } else {
-        this.setDarkMode(false);
+        this.setDarkMode( false );
       }
     }
   }
 
   formatLabel(value: number) {
-    return value + '%';
+    return value.toString().concat('%');
   }
 
   public adjustValue(type: string, value: number): void {
@@ -62,41 +50,30 @@ export class DarkmodeService {
     enableDarkMode(params);
   }
 
-  public saveSubjectToLocalStorage(): string {
-    const params = this.darkModeParamsObjSubject.getValue();
+  public saveLocalStorage(key: string, value: any): boolean {
     try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(params));
-      return 'Saved!';
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
     } catch (e) {
-      return 'Save Failed!';
+      console.error(e);
+      return false;
     }
   }
 
-  public getLocalStorage(): DarkModeParamaters {
-    const params: string = localStorage.getItem(LOCAL_STORAGE_KEY);
-    const paramsParsed: DarkModeParamaters = JSON.parse(params);
-    return paramsParsed;
-  }
-
-  public toggleDarkMode(checked: boolean): void {
-    if (checked) {
-      this.setDarkMode(true);
-    } else {
-      this.setDarkMode(false);
+  public getLocalStorage(key: string): any {
+    if (localStorage.hasOwnProperty(key)) {
+      return JSON.parse(localStorage.getItem(key));
     }
   }
 
-  public isCrappyBrowser(): boolean {
-    /** No IE11 or Edge support, allow Edge Chromium */
-    if ((document as any).documentMode || /edge/.test(navigator.userAgent.toLowerCase()) && !isEdgeChromium) {
+  public isUnsupportedBrowser(): boolean {
+    /** The below code permits Edge Chromium and all other browsers except Edge and IE. */
+    if ((
+      (document as any).documentMode // <-- this line tests for IE
+      || constants.isEdge)
+      && !constants.isEdgeChromium ) {
       return true;
     }
     return false;
   }
-
-
-
-
-
-
 }

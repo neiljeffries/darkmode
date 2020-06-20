@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
+import { constants } from 'src/app/constants';
 import { SlideInOutAnimation } from 'src/app/interfaces/animations';
 import { DarkModeParamaters } from 'src/app/interfaces/dark-mode-paramaters';
 import { DarkmodeService } from 'src/app/services/darkmode.service';
@@ -13,7 +14,7 @@ import { DarkmodeService } from 'src/app/services/darkmode.service';
 })
 export class DarkModeSettingsComponent implements OnDestroy {
   params: DarkModeParamaters;
-  isIE: boolean =  this.darkModeService.isCrappyBrowser();
+  isUnsupportedBrowser: boolean =  this.darkModeService.isUnsupportedBrowser();
   paramsSubscription: Subscription;
   saveResp: string;
   animationState: string;
@@ -37,13 +38,15 @@ export class DarkModeSettingsComponent implements OnDestroy {
 
   public cancel(): void {
     this.matDialogRef.close();
-    this.darkModeService.init();
+    this.darkModeService.initializeDarkMode();
   }
 
   public save(): void {
-    this.saveResp = this.darkModeService.saveSubjectToLocalStorage();
-    if (this.saveResp === 'Saved!') {
-      setTimeout(() => this.matDialogRef.close(), 500);
+    if ( this.darkModeService.saveLocalStorage( constants.DARKMODE_LOCAL_STORAGE_KEY, this.params ) ) {
+      this.saveResp = 'Saved!';
+      setTimeout( () => this.matDialogRef.close(), 500 );
+    } else {
+      this.saveResp = 'Uh Oh! Not Saved!';
     }
   }
 }

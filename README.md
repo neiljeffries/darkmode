@@ -7,7 +7,7 @@ This Angular project uses the awesome DarkReader npm node module. Check them out
 
 This project consists of an Angular web UI that provides dark mode to any website via DarkReader. This project provides an angular user interface and service. It uses local storage to save the user's DarkReader preferences.
 
-I was finally able to get DarkReader working with IE11 by adding the WeakSet.js polyfill. See below... :)
+I was finally able to get DarkReader somewhat working with IE11 by adding the WeakSet.js polyfill. See below... :)
 
     -------------------------------------------------------------------------------
 

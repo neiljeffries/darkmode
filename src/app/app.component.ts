@@ -18,7 +18,7 @@ export class AppComponent {
     public dialog: MatDialog,
     private darkModeService: DarkmodeService
   ) {
-    this.darkModeService.init();
+    this.darkModeService.initializeDarkMode();
   }
 
   openDialog(): void {

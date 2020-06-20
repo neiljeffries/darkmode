@@ -1,14 +1,14 @@
 <h2 mat-dialog-title style="margin-bottom:12px;">DarkMode Settings</h2>
 <mat-dialog-content class="mat-typography">
 
-  <p *ngIf="!isIE" style="text-align: center; padding-top:8px;">
+  <p *ngIf="!isUnsupportedBrowser" style="text-align: center; padding-top:8px;">
     <label style="margin-right: 6px; vertical-align: text-bottom;">Dark Mode:</label>
-    <mat-slide-toggle [(ngModel)]="params.darkmode" (change)="darkModeService.toggleDarkMode($event.checked)">
+    <mat-slide-toggle [(ngModel)]="params.darkmode" (change)="darkModeService.setDarkMode($event.checked)">
      <span>{{ params.darkmode ? "ON" : "OFF" }}</span>
     </mat-slide-toggle>
   </p>
 
-  <p *ngIf="isIE" style="text-align: center; padding:8px;">
+  <p *ngIf="isUnsupportedBrowser" style="text-align: center; padding:8px;">
     <span style="color: red;">
       Uh Oh, this browser does not support
       dark mode. Try a newer browser!
@@ -51,5 +51,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="center">
    <button mat-flat-button (click)="cancel()" color="default">Cancel</button>
-   <button mat-flat-button (click)="save()" color="primary" *ngIf="!isIE">{{ saveResp ? saveResp : "Save" }}</button>
+   <button mat-flat-button (click)="save()" color="primary" *ngIf="!isUnsupportedBrowser">{{ saveResp ? saveResp : "Save" }}</button>
 </mat-dialog-actions>
